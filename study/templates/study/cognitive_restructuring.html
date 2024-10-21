@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Mental Health Study</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/i18n/defaults-*.min.js"></script>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link href="https://fonts.googleapis.com/css2?family=Karma&family=Roboto&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+
+	<style>
+		body{
+			font-family: "Lato", Georgia, "Times New Roman", serif;
+		}
+
+		.btn-as-block {
+			display: block;
+			}
+
+		.blog-header {
+			/* line-height: 1; */
+			/* border-bottom: 1px solid #e5e5e5; */
+		}
+		
+		.blog-header-logo {
+			font-family: "Lato", Georgia, "Times New Roman", serif;
+			font-size: 2.5rem;
+			text-decoration: none;
+		}
+		
+		.header-img {
+			width:10px;
+
+		}
+		
+		.blog-header-logo:hover {
+			text-decoration: none;
+		}
+		
+		
+		.display-4 {
+			font-size: 2.5rem;
+		}
+		@media (min-width: 768px) {
+			.display-4 {
+			font-size: 3rem;
+			}
+		}
+		
+		.nav-scroller {
+			position: relative;
+			z-index: 2;
+			height: 2.75rem;
+			/* overflow-y: hidden; */
+		}
+		
+		.nav-scroller .nav {
+			display: flex;
+			flex-wrap: nowrap;
+			padding-bottom: 1rem;
+			margin-top: -1px;
+			overflow-x: auto;
+			text-align: center;
+			white-space: nowrap;
+			-webkit-overflow-scrolling: touch;
+		}
+		
+		.nav-scroller .nav-link {
+			/* padding-top: .75rem; */
+			/* padding-bottom: .75rem; */
+			font-size: .875rem;
+		}
+
+		.link-secondary {
+			text-decoration: none;
+		}
+		
+		
+		.flex-auto {
+			flex: 0 0 auto;
+		}
+		
+		.h-250 { height: 250px; }
+		/* @media (min-width: 768px) {
+			.h-md-250 { height: 250px; }
+		} */
+		
+		/* Pagination */
+		.blog-pagination {
+			margin-bottom: 4rem;
+		}
+		.blog-pagination > .btn {
+			border-radius: 2rem;
+		}
+		
+		/*
+		* Blog posts
+		*/
+		.blog-post {
+			margin-bottom: 4rem;
+		}
+		.blog-post-title {
+			margin-bottom: .25rem;
+			font-size: 2.5rem;
+		}
+		.blog-post-meta {
+			margin-bottom: 1.25rem;
+			color: #727272;
+		}
+		
+		/*
+		* Footer
+		*/
+		.blog-footer {
+			/* padding: 2.5rem 0; */
+			/* color: #727272;
+			text-align: center;
+			background-color: #f9f9f9;
+			border-top: .05rem solid #e5e5e5; */
+		}
+		.blog-footer p:last-child {
+			position: absolute;
+			bottom: 0;
+		}
+
+		.mt-6 {
+			margin-top: 55px !important;
+			}
+		.fs-5-5{
+			font-size: 18px;
+		}
+
+
+	</style>
+
+	<script type="text/javascript">
+        function show_questions(){
+            $("#edit_questions").show();
+            $("#edit_div").hide();
+        }
+		$(document).ready(function() {
+			$('.selectpicker').selectpicker();
+
+            $("#edit").click(function() {
+            // disable button
+            $(this).prop("disabled", true);
+            // add spinner to button
+            $(this).html(
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+            );
+
+            setTimeout(show_questions, 200);
+
+            // $("#distortion_yes").prop("disabled", true);
+            // $("#distortion_no").prop("disabled", true);
+         });
+
+            // $("#distortion_yes").prop("disabled", true);
+            // $("#distortion_no").prop("disabled", true);
+         });
+
+
+	</script>
+
+</head>
+
+<body>
+	<header class="blog-header pb-2 pt-4">
+		<div class="row flex-nowrap justify-content-between align-items-center">
+			<div class="col-3 pt-2">
+			<!-- <a class="link-secondary" href="#">Subscribe</a> -->
+			</div>
+			<div class="col-6 text-center">
+				<div class="row justify-content-center mb-4">
+					<div class="col-md-3 col-10 align-self-center me-md-4 me-0 mb-md-0 mb-5">
+						<a href="/"><img src="https://raw.githubusercontent.com/ash-shar/DISHELPER/master/Signature_Stacked_Purple_RGB.png" class="img-fluid"></a>
+					</div>
+
+					<!-- <div class="col-1 align-self-center"></div> -->
+
+					<div class="col-md-3 col-10 align-self-center">
+						<a href="/"><img src="https://raw.githubusercontent.com/ash-shar/DISHELPER/master/mha-logo.png" style="width: 120%; height: auto;"></a>
+					</div>
+				</div>
+
+
+			<strong><a id="field-iteration" class="blog-header-logo text-dark pt-2" href="#">Cognitive Restructuring</a></strong>
+			</div>
+			<div class="col-3 d-flex align-items-center">
+			</div>
+		</div>
+	</header>
+
+    <div class="container">
+        <div class="row" style="font-size: 17px;">
+            <div class="col-1"></div>
+
+            <div class="col-10">            
+
+            <!-- <h4 class="mt-4">Pilot Goals</h4> -->
+
+            <p class="mt-3 fs-5-5">During tough times, negative thoughts are especially likely to spiral out of control. Things can start to feel hopeless — but the truth is, there's always hope.</p>
+
+			<p class="fs-5-5">We can learn to replace negative, hopeless thoughts with ones that are more positive, realistic, or helpful. This therapeutic process is called cognitive restructuring or cognitive reframing.</p>
+            
+            <br/>
+
+            <h4 class="mt-1 mb-4"><b>How to perform cognitive restructuring?</b></h4>
+
+			<p class="mt-3 fs-5-5">Our negative thinking often falls into common patterns, called "thinking traps." In cognitive restructuring, we recognize when we're getting stuck in a thinking trap and come up with new ways to think about the situation we are dealing with.</p>
+
+			<p class="mt-2 fs-5-5">Here are some common thinking traps, with examples and strategies for getting unstuck:</p>
+
+
+
+
+			<div class="row mt-42 fs-5-5">
+				<div class="col-11">
+					<div class="card">
+					<div class="card-header">
+						<strong>All-or-Nothing Thinking</strong>
+						</div>                                
+						<div class="card-body">
+						<div class="row">
+							<p>Thinking in extremes. “If it isn’t perfect, I failed. There’s no such thing as ‘good enough’.”</p>
+							
+							<p><strong>Tips to overcome:</strong> Things in life are rarely black and white. There are shades of gray—and all sorts of other colors too! To break free from all-or-nothing thinking, focus on what’s positive or neutral about the situation. “Maybe I didn’t get an A, but a C is still a passing grade. Now I know that this subject is hard for me, and I may need to spend more time studying.”</p>
+						</div>
+						
+						</div>
+					</div>
+				
+				
+				</div>
+				<div class="col-1"></div>
+				</div>
+				<br/>
+
+
+				<div class="row mt-42 fs-5-5">
+					<div class="col-11">
+						<div class="card">
+						<div class="card-header">
+							<strong>Overgeneralizing</strong>
+							</div>                                
+							<div class="card-body">
+							<div class="row">
+								<p>Jumping to conclusions based on one experience. “They didn’t text me back. Nobody ever texts me back.”</p>
+								
+								<p><strong>Tips to overcome:</strong> We often notice when things go wrong—and forget about the times they went right. Even if things have gone wrong many times in the past, that doesn’t mean they will stay that way. Try to recall times when things went well for you.  Imagine what it would be like for things to go well next time.</p>
+							</div>
+							
+							</div>
+						</div>
+					
+					
+					</div>
+					<div class="col-1"></div>
+					</div>
+					<br/>
+
+
+					<div class="row mt-42 fs-5-5">
+						<div class="col-11">
+							<div class="card">
+							<div class="card-header">
+								<strong>Labeling</strong>
+								</div>                                
+								<div class="card-body">
+								<div class="row">
+									<p>Defining a person based on one action or characteristic. “I said something embarrassing. I’m such a loser.”</p>
+									
+									<p><strong>Tips to overcome:</strong> People are complex. None of us have just one thing that defines us. To break free from labeling, consider all different aspects of a person. “I may not be the most outgoing person, but I’m a good friend to the people closest to me.”</p>
+								</div>
+								
+								</div>
+							</div>
+						
+						
+						</div>
+						<div class="col-1"></div>
+						</div>
+						<br/>
+
+
+						<div class="row mt-42 fs-5-5">
+							<div class="col-11">
+								<div class="card">
+								<div class="card-header">
+									<strong>Fortune Telling</strong>
+									</div>                                
+									<div class="card-body">
+									<div class="row">
+										<p>Trying to predict the future. Focusing on one possibility and ignoring other, more likely outcomes.</p>
+										
+										<p><strong>Tips to overcome:</strong> No one can predict the future. To break free from fortune telling, be curious about what’s going to happen next. Focus on what you can control, and let go of what you can’t.</p>
+									</div>
+									
+									</div>
+								</div>
+							
+							
+							</div>
+							<div class="col-1"></div>
+							</div>
+							<br/>
+
+
+							<div class="row mt-42 fs-5-5">
+								<div class="col-11">
+									<div class="card">
+									<div class="card-header">
+										<strong>Mind Reading</strong>
+										</div>                                
+										<div class="card-body">
+										<div class="row">
+											<p>Assuming you know what someone else is thinking. “She didn’t say hello. She must be mad at me.”</p>
+											
+											<p><strong>Tips to overcome:</strong> No one can know what other people are thinking. To break free from mind reading, try to imagine other, less negative possibilities. “She didn’t say hello, but maybe she just didn’t hear me.” When possible, try to ask the person what they’re thinking, rather than just assuming.</p>
+										</div>
+										
+										</div>
+									</div>
+								
+								
+								</div>
+								<div class="col-1"></div>
+								</div>
+								<br/>
+
+
+								<div class="row mt-42 fs-5-5">
+									<div class="col-11">
+										<div class="card">
+										<div class="card-header">
+											<strong>Emotional Reasoning</strong>
+											</div>                                
+											<div class="card-body">
+											<div class="row">
+												<p>Treating your feelings like facts. “I woke up feeling anxious. I just know something bad is going to happen today.”</p>
+												
+												<p><strong>Tips to overcome:</strong> Our feelings provide valuable information to us, but they’re only part of the picture. To break free from emotional reasoning, consider all the information you have.</p>
+											</div>
+											
+											</div>
+										</div>
+									
+									
+									</div>
+									<div class="col-1"></div>
+									</div>
+									<br/>
+
+									<div class="row mt-42 fs-5-5">
+										<div class="col-11">
+											<div class="card">
+											<div class="card-header">
+												<strong>Should Statements</strong>
+												</div>                                
+												<div class="card-body">
+												<div class="row">
+													<p>Setting unrealistic expectations for yourself. “I shouldn’t need to ask for help. I should be independent.”</p>
+													
+													<p><strong>Tips to overcome:</strong> To break free from “should” statements, think about where your unrealistic expectations came from. Has someone told you that you need to be a certain way? It’s a good thing to want to be your “best self.” But we all make mistakes along the way. Let your mistakes be an opportunity to learn and grow.</p>
+												</div>
+												
+												</div>
+											</div>
+										
+										
+										</div>
+										<div class="col-1"></div>
+										</div>
+										<br/>
+
+										<div class="row mt-42 fs-5-5">
+											<div class="col-11">
+												<div class="card">
+												<div class="card-header">
+													<strong>Personalizing</strong>
+													</div>                                
+													<div class="card-body">
+													<div class="row">
+														<p>Taking things personally or making them about you. “He’s quiet today. I wonder what I did wrong.”</p>
+														
+														<p><strong>Tips to overcome:</strong> As humans, we all have a tendency to think that we have more impact on other people than we really do. To break free from personalization, think about all the other things that could be affecting someone’s behavior. “Maybe they’re just having a bad day. Maybe they’re distracted."</p>
+													</div>
+													
+													</div>
+												</div>
+											
+											
+											</div>
+											<div class="col-1"></div>
+											</div>
+											<br/>
+
+
+											<div class="row mt-42 fs-5-5">
+												<div class="col-11">
+													<div class="card">
+													<div class="card-header">
+														<strong>Disqualifying the Positive</strong>
+														</div>                                
+														<div class="card-body">
+														<div class="row">
+															<p>When something good happens, you ignore it or think it doesn’t count. “I only won because I got lucky.”</p>
+															
+															<p><strong>Tips to overcome:</strong> To break free of this thinking trap, go out of your way to notice the positive side. For every negative thing you notice, try pointing out three positive things. At first, it may feel forced, but over time you’ll find yourself noticing the small things and feeling more grateful.</p>
+														</div>
+														
+														</div>
+													</div>
+												
+												
+												</div>
+												<div class="col-1"></div>
+												</div>
+												<br/>
+
+
+												<div class="row mt-42 fs-5-5">
+													<div class="col-11">
+														<div class="card">
+														<div class="card-header">
+															<strong>Catastrophizing</strong>
+															</div>                                
+															<div class="card-body">
+															<div class="row">
+																<p>Focusing on the worst-case scenario. “My boss asked if I had a few minutes to talk. I’m going to get fired!”</p>
+																
+																<p><strong>Tips to overcome:</strong> Keep in mind that worst-case scenarios are very unlikely. Try to remind yourself of all the more likely, less severe things that could happen. Expecting the worst can even become a self-fulfilling prophecy. It’s okay to be prepared, but try to go into situations expecting a positive outcome.</p>
+															</div>
+															
+															</div>
+														</div>
+													
+													
+													</div>
+													<div class="col-1"></div>
+													</div>
+													<br/>
+
+
+													<div class="row mt-42 fs-5-5">
+														<div class="col-11">
+															<div class="card">
+															<div class="card-header">
+																<strong>Comparing and Despairing</strong>
+																</div>                                
+																<div class="card-body">
+																<div class="row">
+																	<p>Comparing your worst to someone else’s best.</p>
+																	
+																	<p><strong>Tips to overcome:</strong> It’s best not to compare yourself to others at all—but that’s easier said than done. Remember that what you see on social media and in public is everyone showing off their best. You don’t see their worst—and they probably don’t see yours.</p>
+																</div>
+																
+																</div>
+															</div>
+														
+														
+														</div>
+														<div class="col-1"></div>
+														</div>
+														<br/>
+
+
+														<div class="row mt-42 fs-5-5">
+															<div class="col-11">
+																<div class="card">
+																<div class="card-header">
+																	<strong>Blaming</strong>
+																	</div>                                
+																	<div class="card-body">
+																	<div class="row">
+																		<p>Giving away your own power to other people. “It’s not my fault I yelled. You made me angry!"</p>
+																		
+																		<p><strong>Tips to overcome:</strong> Take responsibility for whatever you can—no more, no less. “It was okay for me to feel angry in that situation. But I didn’t have to take it out on everyone else. Next time, I’ll try taking a deep breath before I act.” And remember: blaming yourself is still blaming! Try to think less of whose fault it is, and focus instead on what you can do to make things better.</p>
+																	</div>
+																	
+																	</div>
+																</div>
+															
+															
+															</div>
+															<div class="col-1"></div>
+															</div>
+															<br/>
+
+
+															<div class="row mt-42 fs-5-5">
+																<div class="col-11">
+																	<div class="card">
+																	<div class="card-header">
+																		<strong>Negative Feeling or Emotion</strong>
+																		</div>                                
+																		<div class="card-body">
+																		<div class="row">
+																			<p>I'm having a negative feeling or emotion which isn’t a thinking trap.</p>
+																			
+																			<p><strong>Tips to overcome:</strong> Feeling negative emotions is a normal part of life. Sometimes we get “stuck” in those feelings and don’t know how to move forward. First, it’s important to allow ourselves to feel these emotions and to accept them for what they are. To get un-stuck, it helps to think about what we can control, and what positive things we can be grateful for.</p>
+																		</div>
+																		
+																		</div>
+																	</div>
+																
+																
+																</div>
+																<div class="col-1"></div>
+																</div>
+																<br/>
+
+										
+                    
+        
+
+		<div class="row mt-4 mb-5">		
+		</div>
+
+    </div>
+
+        <div class="col-1"></div>
+
+        </div>
+
+        </div>
+
+
+    </body>
+    </html>

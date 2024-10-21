@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="mobile-web-app-capable" content="yes">
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+
+	  <script>
+		 $(document).ready(function(){
+			// randomly assign a number between 0, 1, and 2
+			var usage = Math.floor(Math.random() * 3);
+			$("#usage").val(usage);
+			
+			// get value of the hidden input
+			if(debug) console.log($("#usage").val());
+		 });
+	  </script>
+
+
+	  <body>
+			<form method="post" id="redcap-form"  action="https://redcap.iths.org/surveys/?s=EFJ9AHR8DMY3EACJ"> <!-- @JUSTIN: Final link to be shared soon -->
+				<input type="hidden" name="usage" id="usage">
+				<input type="hidden" name="n8m95" id="n8m95"> <!-- @JUSTIN: Assign code to this input field -->
+				<input type="submit" name="__prefill" value="Pre-fill Survey">
+			</form>
+	  </body>
+</head>
+</html>

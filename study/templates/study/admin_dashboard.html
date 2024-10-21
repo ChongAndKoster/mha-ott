@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Mental Health Study</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	
+
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link href="https://fonts.googleapis.com/css2?family=Karma&family=Roboto&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+	<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+    <style>
+		body{
+			font-family: "Lato", Georgia, "Times New Roman", serif;
+		}
+
+		.btn-as-block {
+			display: block;
+			}
+
+		.blog-header {
+			/* line-height: 1; */
+			/* border-bottom: 1px solid #e5e5e5; */
+		}
+		
+		.blog-header-logo {
+			font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+			font-size: 2.0rem;
+			text-decoration: none;
+		}
+		
+		.header-img {
+			width:10px;
+
+		}
+		
+		.blog-header-logo:hover {
+			text-decoration: none;
+		}
+		
+		
+		.display-4 {
+			font-size: 2.5rem;
+		}
+		@media (min-width: 768px) {
+			.display-4 {
+			font-size: 3rem;
+			}
+		}
+		
+		.nav-scroller {
+			position: relative;
+			z-index: 2;
+			height: 2.75rem;
+			/* overflow-y: hidden; */
+		}
+		
+		.nav-scroller .nav {
+			display: flex;
+			flex-wrap: nowrap;
+			padding-bottom: 1rem;
+			margin-top: -1px;
+			overflow-x: auto;
+			text-align: center;
+			white-space: nowrap;
+			-webkit-overflow-scrolling: touch;
+		}
+		
+		.nav-scroller .nav-link {
+			/* padding-top: .75rem; */
+			/* padding-bottom: .75rem; */
+			font-size: .875rem;
+		}
+
+		.link-secondary {
+			text-decoration: none;
+		}
+		
+		
+		.flex-auto {
+			flex: 0 0 auto;
+		}
+		
+		.h-250 { height: 250px; }
+		@media (min-width: 768px) {
+			.h-md-250 { height: 250px; }
+		}
+		
+		/* Pagination */
+		.blog-pagination {
+			margin-bottom: 4rem;
+		}
+		.blog-pagination > .btn {
+			border-radius: 2rem;
+		}
+		
+		/*
+		* Blog posts
+		*/
+		.blog-post {
+			margin-bottom: 4rem;
+		}
+		.blog-post-title {
+			margin-bottom: .25rem;
+			font-size: 2.5rem;
+		}
+		.blog-post-meta {
+			margin-bottom: 1.25rem;
+			color: #727272;
+		}
+		
+		/*
+		* Footer
+		*/
+		.blog-footer {
+			/* padding: 2.5rem 0; */
+			color: #727272;
+			text-align: center;
+			background-color: #f9f9f9;
+			border-top: .05rem solid #e5e5e5;
+            bottom: 0;
+		}
+		/* .blog-footer p:last-child {
+			position: absolute;
+			bottom: 0;
+		} */
+
+		.mt-6 {
+			margin-top: 55px !important;
+			}
+		.fs-5-5{
+			font-size: 18px;
+		}
+
+
+	</style>
+
+	<script>
+		$(document).ready(function(){
+			$("#download").click(function(){
+				$("#usage_table").table2excel({
+					filename: "diy-trial-usage",
+				});
+			});
+		});
+
+	</script>
+
+
+</head>
+<body>
+	<header class="blog-header pb-2 pt-4">
+		<div class="row flex-nowrap justify-content-between align-items-center">
+			<div class="col-3 pt-2">
+			<!-- <a class="link-secondary" href="#">Subscribe</a> -->
+			</div>
+			<div class="col-6 text-center">
+				<div class="row justify-content-center mb-4">
+					<div class="col-md-3 col-10 align-self-center me-md-4 me-0 mb-md-0 mb-5">
+						<a href="/"><img src="https://raw.githubusercontent.com/ash-shar/DISHELPER/master/Signature_Stacked_Purple_RGB.png" class="img-fluid"></a>
+					</div>
+
+					<!-- <div class="col-1 align-self-center"></div> -->
+
+					<div class="col-md-3 col-10 align-self-center">
+						<a href="/"><img src="https://raw.githubusercontent.com/ash-shar/DISHELPER/master/mha-logo.png" style="width: 120%; height: auto;"></a>
+					</div>
+				</div>
+
+
+			<strong><a id="field-iteration" class="blog-header-logo text-dark pt-2" href="#">Mental Health Study</a></strong>
+			</div>
+			<div class="col-3 d-flex align-items-center">
+			</div>
+		</div>
+		<!-- <div class="row justify-content-between align-items-center text-center text-muted">
+			<p>Exercise your agency while collaboratively designing an object!</p></div> -->
+	</header>
+
+		
+			
+	<div class="text-justify container mt-1 p-3">
+
+		<div class="row my-3">
+			<form action="{% url 'study:statistics' %}" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="code" value="{{ code }}">
+					<div class="col-2">
+						<button type="submit" class="btn btn-secondary">Outcome Analysis</button>
+					</div>
+		</div>
+		
+		<div class="row">
+			<table class="table table-hover text-nowrap" id="usage_table">
+				<thead>
+					<tr>
+						<th scope="col" class="me-3 w-auto">#</th> <!-- 0 -->
+						<th scope="col" class="w-auto">study_id</th> <!-- 1 -->
+						<th scope="col" class="w-auto">Start Date</th> <!-- 2 -->
+						<th scope="col" class="w-auto">Condition</th> <!-- 3 -->
+						<th scope="col" class="w-auto">Earnings</th> <!-- 4 -->
+						<th scope="col" class="w-auto">Current Week</th> <!-- 5 -->
+						<th scope="col" class="w-auto">w1</th> <!-- 16 -->
+						<th scope="col" class="w-auto">w1_earnings</th> <!-- 40 -->
+						<th scope="col" class="w-auto">w2</th> <!-- 20 -->
+						<th scope="col" class="w-auto">w2_earnings</th> <!-- 41 -->
+						<th scope="col" class="w-auto">w3</th> <!-- 24 -->
+						<th scope="col" class="w-auto">w3_earnings</th> <!-- 42 -->
+						<th scope="col" class="w-auto">w4</th> <!-- 28 -->
+						<th scope="col" class="w-auto">w4_earnings</th> <!-- 43 -->
+						<th scope="col" class="w-auto">w5</th> <!-- 32 -->
+						<th scope="col" class="w-auto">w5_earnings</th> <!-- 44 -->
+						<th scope="col" class="w-auto">w8</th> <!-- 36 -->
+						<th scope="col" class="w-auto">w8_earnings</th> <!-- 45 -->
+
+						
+						<th scope="col" class="w-auto">W1 Tool Use</th> <!-- 6 -->
+						<th scope="col" class="w-auto">W1 Survey</th> <!-- 7 -->
+						<th scope="col" class="w-auto">W2 Tool Use</th> <!-- 8 -->
+						<th scope="col" class="w-auto">W2 Survey</th> <!-- 9 -->
+						<th scope="col" class="w-auto">W3 Tool Use</th> <!-- 10 -->
+						<th scope="col" class="w-auto">W3 Survey</th> <!-- 11 -->
+						<th scope="col" class="w-auto">W4 Tool Use</th> <!-- 12 -->
+						<th scope="col" class="w-auto">W4 Survey</th> <!-- 13 -->
+						<th scope="col" class="w-auto">W5 Survey</th> <!-- 14 -->
+						<th scope="col" class="w-auto">W8 Survey</th> <!-- 15 --> 
+						
+						<th scope="col" class="w-auto">w1_paid</th> <!-- 17 -->
+						<th scope="col" class="w-auto">w1_amt</th> <!-- 18 -->
+						<th scope="col" class="w-auto">pay_date_w1</th> <!-- 19 -->
+						
+						<th scope="col" class="w-auto">w2_paid</th> <!-- 21 -->
+						<th scope="col" class="w-auto">w2_amt</th> <!-- 22 -->
+						<th scope="col" class="w-auto">pay_date_w2</th> <!-- 23 -->
+						
+						<th scope="col" class="w-auto">w3_paid</th> <!-- 25 -->
+						<th scope="col" class="w-auto">w3_amt</th> <!-- 26 -->
+						<th scope="col" class="w-auto">pay_date_w3</th> <!-- 27 -->
+						
+						<th scope="col" class="w-auto">w4_paid</th> <!-- 29 -->
+						<th scope="col" class="w-auto">w4_amt</th> <!-- 30 -->
+						<th scope="col" class="w-auto">pay_date_w4</th> <!-- 31 -->
+						
+						<th scope="col" class="w-auto">w5_paid</th>  <!-- 33 -->
+						<th scope="col" class="w-auto">w5_amt</th> <!-- 34 -->
+						<th scope="col" class="w-auto">pay_date_w5</th> <!-- 35 -->
+						
+						<th scope="col" class="w-auto">w8_paid</th> <!-- 37 -->
+						<th scope="col" class="w-auto">w8_amt</th> <!-- 38 -->
+						<th scope="col" class="w-auto">pay_date_w8</th> <!-- 39 -->
+					</tr>
+
+					<!-- [cnt, elem['study_id'], elem['date_started'], elem['condition'], total_earnings, curr_week, elem['week_1_use'], elem['survey_1_status'], elem['week_2_use'], elem['survey_2_status'],  elem['week_3_use'], elem['survey_3_status'], elem['week_4_use'], elem['survey_4_status'],  elem['survey_5_status'], elem['survey_8_status'], elem['w1'], elem['w2'], elem['w3'], elem['w4'], elem['w5'], elem['w8'], elem['w1_paid'], elem['w1_amt'], elem['pay_date_w1'], elem['w2_paid'], elem['w2_amt'], elem['pay_date_w2'], elem['w3_paid'], elem['w3_amt'], elem['pay_date_w3'], elem['w4_paid'], elem['w4_amt'], elem['pay_date_w4'], elem['w5_paid'], elem['w5_amt'], elem['pay_date_w5'], elem['w8_paid'], elem['w8_amt'], elem['pay_date_w8'],] -->
+					
+
+					{% for row in data %}
+					<tr>
+						<td><b>{{ row.0 }}</b></td>
+						<td class="text-center">{{ row.1 }}</td>
+						<td class="text-center">{{ row.2 }}</td>
+						<td class="text-center">{{ row.3 }}</td>
+						<td class="text-center">{{ row.4 }}</td>
+						<td class="text-center">{{ row.5 }}</td>
+						<td class="text-center">{{ row.16 }}</td>
+						<td class="text-center">{{ row.40 }}</td>
+						<td class="text-center">{{ row.20 }}</td>
+						<td class="text-center">{{ row.41 }}</td>
+						<td class="text-center">{{ row.24 }}</td>
+						<td class="text-center">{{ row.42 }}</td>
+						<td class="text-center">{{ row.28 }}</td>
+						<td class="text-center">{{ row.43 }}</td>
+						<td class="text-center">{{ row.32 }}</td>
+						<td class="text-center">{{ row.44 }}</td>
+						<td class="text-center">{{ row.36 }}</td>
+						<td class="text-center">{{ row.45 }}</td>
+						<td class="text-center">{{ row.6 }}</td>
+						<td class="text-center">{{ row.7 }}</td>
+						<td class="text-center">{{ row.8 }}</td>
+						<td class="text-center">{{ row.9 }}</td>
+						<td class="text-center">{{ row.10 }}</td>
+						<td class="text-center">{{ row.11 }}</td>
+						<td class="text-center">{{ row.12 }}</td>
+						<td class="text-center">{{ row.13 }}</td>
+						<td class="text-center">{{ row.14 }}</td>
+						<td class="text-center">{{ row.15 }}</td>
+						
+						<td class="text-center">{{ row.17 }}</td>
+						<td class="text-center">{{ row.18 }}</td>
+						<td class="text-center">{{ row.19 }}</td>
+						
+						<td class="text-center">{{ row.21 }}</td>
+						<td class="text-center">{{ row.22 }}</td>
+						<td class="text-center">{{ row.23 }}</td>
+						
+						<td class="text-center">{{ row.25 }}</td>
+						<td class="text-center">{{ row.26 }}</td>
+						<td class="text-center">{{ row.27 }}</td>
+						
+						<td class="text-center">{{ row.29 }}</td>
+						<td class="text-center">{{ row.30 }}</td>
+						<td class="text-center">{{ row.31 }}</td>
+						
+						<td class="text-center">{{ row.33 }}</td>
+						<td class="text-center">{{ row.34 }}</td>
+						<td class="text-center">{{ row.35 }}</td>
+						
+						<td class="text-center">{{ row.37 }}</td>
+						<td class="text-center">{{ row.38 }}</td>
+						<td class="text-center">{{ row.39 }}</td>
+
+					</tr>
+					{% endfor %}
+				</thead>
+			</table>
+
+		</div>
+
+
+		<div class="row mt-5">
+			<div class="col-2">
+			<button class="btn btn-primary" id="download">Download Table</button>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+Django==3.2
+
+psycopg2-binary
+pytz==2019.3
+sqlparse==0.3.0
+scikit-learn
+requests
+openai==0.27.0
+django-csp
+
+numpy==1.21.0
+pandas==1.3.0
+opentelemetry-instrumentation-django
