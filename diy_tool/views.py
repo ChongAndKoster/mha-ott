@@ -53,7 +53,7 @@ OpenAI API
 '''
 import openai
 # openai.organization = "org-o2Ssn2MTYvpMDkvzRSiehlv4"
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 
 from diy_tool.definitions import *
 from diy_tool.prompts import *
@@ -2033,7 +2033,7 @@ def cognitive_distortion_request(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				openai.api_base = "https://reframing20k2.openai.azure.com"
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 				openai.api_version = "2024-02-15-preview"
 				openai.api_type = "azure"
@@ -2097,7 +2097,7 @@ def cognitive_distortion_request(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				openai.api_base = "https://reframing20k2.openai.azure.com"
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 				openai.api_version = "2024-02-15-preview"
 				openai.api_type = "azure"
@@ -2261,7 +2261,7 @@ def cognitive_distortion_request_finetuned(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				openai.api_base = "https://reframing20k2.openai.azure.com"
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 				openai.api_version = "2024-02-15-preview"
 				openai.api_type = "azure"
@@ -2425,7 +2425,7 @@ def make_more_readable(input_text):
 
 	while current_tries <= MAX_RETRIES:
 		try:
-			openai.api_base = "https://reframing20k2.openai.azure.com"
+			openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 			openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 			openai.api_version = "2024-02-15-preview"
 			openai.api_type = "azure"
@@ -2797,7 +2797,7 @@ def rational_response_request_single(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					openai.api_base = "https://reframing20k2.openai.azure.com"
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					openai.api_version = "2024-02-15-preview"
 					openai.api_type = "azure"
@@ -2861,7 +2861,7 @@ def get_cognitive_distortion_category(thought):
 
 	while current_tries <= MAX_RETRIES:
 		try:
-			openai.api_base = "https://reframing20k2.openai.azure.com"
+			openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 			openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 			openai.api_version = "2024-02-15-preview"
 			openai.api_type = "azure"
@@ -2992,20 +2992,13 @@ def rational_response_request_1(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					if current_tries <= 1:
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "davinci-002"
-						gpt3_model = deployment
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "text-davinci-003"
-						gpt3_model = deployment
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "davinci-002"
+					gpt3_model = deployment
+					
 
 					curr_response_reframing = openai.Completion.create(
 						engine=gpt3_model,
@@ -3108,20 +3101,12 @@ def rational_response_request_2(request):
 			while current_tries <= MAX_RETRIES:
 				try:
 
-					if current_tries <= 1:
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "davinci-002"
-						gpt3_model = deployment
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "text-davinci-003"
-						gpt3_model = deployment
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "davinci-002"
+					gpt3_model = deployment
 
 					curr_response_reframing = openai.Completion.create(
 						engine=gpt3_model,
@@ -3222,20 +3207,12 @@ def rational_response_request_3(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					if current_tries <= 1:
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "davinci-002"
-						gpt3_model = deployment
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "text-davinci-003"
-						gpt3_model = deployment
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "davinci-002"
+					gpt3_model = deployment
 
 					curr_response_reframing = openai.Completion.create(
 						engine=gpt3_model,
@@ -3312,7 +3289,7 @@ def rational_response_request_theme_1(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				openai.api_base = "https://reframing20k2.openai.azure.com"
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 				openai.api_version = "2024-02-15-preview"
 				openai.api_type = "azure"
@@ -3427,21 +3404,13 @@ def rational_response_request_theme_1(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					if current_tries <= 1 and curr_theme.strip().lower() != 'suicide':
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "davinci-002"
-						gpt3_model = deployment
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "text-davinci-003"
-						gpt3_model = deployment
-					
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "davinci-002"
+					gpt3_model = deployment
+
 					curr_response_reframing = openai.Completion.create(
 						engine=gpt3_model,
 						prompt=curr_reframing_prompt + "\n\n" + prompt_input + '\nRational Response:',
@@ -3526,7 +3495,7 @@ def rational_response_request_theme_2(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				openai.api_base = "https://reframing20k2.openai.azure.com"
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 				openai.api_version = "2024-02-15-preview"
 				openai.api_type = "azure"
@@ -3585,7 +3554,7 @@ def rational_response_request_theme_2(request):
 		pprint.pprint(curr_distr)
 
 
-		openai.api_base = "https://reframing20k2.openai.azure.com"
+		openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 		openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 		openai.api_version = "2024-02-15-preview"
 		openai.api_type = "azure"
@@ -3650,20 +3619,12 @@ def rational_response_request_theme_2(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					if current_tries <= 1 and curr_theme.strip().lower() != 'suicide':
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "davinci-002"
-						gpt3_model = deployment
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "text-davinci-003"
-						gpt3_model = deployment
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "davinci-002"
+					gpt3_model = deployment
 
 					curr_response_reframing = openai.Completion.create(
 						engine=gpt3_model,
@@ -3730,7 +3691,7 @@ def get_theme(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				openai.api_base = "https://reframing20k2.openai.azure.com"
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 				openai.api_version = "2024-02-15-preview"
 				openai.api_type = "azure"
@@ -3868,7 +3829,7 @@ def rational_response_request_theme_new_1(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					openai.api_base = "https://reframing20k2.openai.azure.com"
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					openai.api_version = "2024-02-15-preview"
 					openai.api_type = "azure"
@@ -3876,7 +3837,7 @@ def rational_response_request_theme_new_1(request):
 					gpt3_model = deployment
 
 					# if current_tries <= 1 and curr_theme.strip().lower() != 'suicide':
-					# 	openai.api_base = "https://reframing20k2.openai.azure.com"
+					# 	openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					# 	openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					# 	openai.api_version = "2024-02-15-preview"
 					# 	openai.api_type = "azure"
@@ -3970,7 +3931,7 @@ def rational_response_request_theme_new_2(request):
 
 		time.sleep(1)
 
-		openai.api_base = "https://reframing20k2.openai.azure.com"
+		openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 		openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 		openai.api_version = "2024-02-15-preview"
 		openai.api_type = "azure"
@@ -4043,7 +4004,7 @@ def rational_response_request_theme_new_2(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					openai.api_base = "https://reframing20k2.openai.azure.com"
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					openai.api_version = "2024-02-15-preview"
 					openai.api_type = "azure"
@@ -4051,7 +4012,7 @@ def rational_response_request_theme_new_2(request):
 					gpt3_model = deployment
 
 					# if current_tries <= 1 and curr_theme.strip().lower() != 'suicide':
-					# 	openai.api_base = "https://reframing20k2.openai.azure.com"
+					# 	openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					# 	openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					# 	openai.api_version = "2024-02-15-preview"
 					# 	openai.api_type = "azure"
@@ -4144,7 +4105,7 @@ def rational_response_request_theme_new_3(request):
 
 		time.sleep(1)
 
-		openai.api_base = "https://reframing20k2.openai.azure.com"
+		openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 		openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 		openai.api_version = "2024-02-15-preview"
 		openai.api_type = "azure"
@@ -4217,7 +4178,7 @@ def rational_response_request_theme_new_3(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					openai.api_base = "https://reframing20k2.openai.azure.com"
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					openai.api_version = "2024-02-15-preview"
 					openai.api_type = "azure"
@@ -4225,7 +4186,7 @@ def rational_response_request_theme_new_3(request):
 					gpt3_model = deployment
 
 					# if current_tries <= 1 and curr_theme.strip().lower() != 'suicide':
-					# 	openai.api_base = "https://reframing20k2.openai.azure.com"
+					# 	openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					# 	openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
 					# 	openai.api_version = "2024-02-15-preview"
 					# 	openai.api_type = "azure"
@@ -4380,41 +4341,23 @@ def rational_response_request_theme_gpt4_1(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:					
-					if current_tries <= 1:
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "gpt-4"
-						gpt3_model = deployment
+					# if current_tries <= 1:
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "gpt-4"
+					gpt3_model = deployment
 
-						curr_response_reframing = openai.ChatCompletion.create(
-							deployment_id=deployment,
-							model='gpt-4',
-							messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
-							max_tokens=128,
-							top_p=top_p,
-							stop=['\n'],
-							request_timeout=30.0,
-						)
-
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "gpt-4"
-						gpt3_model = deployment
-
-						curr_response_reframing = openai.ChatCompletion.create(
-							model=gpt3_model,
-							messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
-							max_tokens=128,
-							top_p=top_p,
-							stop=['\n'],
-							request_timeout=30.0,
-						)
-					
+					curr_response_reframing = openai.ChatCompletion.create(
+						deployment_id=deployment,
+						model='gpt-4',
+						messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
+						max_tokens=128,
+						top_p=top_p,
+						stop=['\n'],
+						request_timeout=30.0,
+					)
 					
 					current_tries += 1
 					break
@@ -4545,42 +4488,23 @@ def rational_response_request_theme_gpt4_2(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "gpt-4"
+					gpt3_model = deployment
 
-					if current_tries <= 1:
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "gpt-4"
-						gpt3_model = deployment
+					curr_response_reframing = openai.ChatCompletion.create(
+						deployment_id=deployment,
+						model='gpt-4',
+						messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
+						max_tokens=128,
+						top_p=top_p,
+						stop=['\n'],
+						request_timeout=30.0,
+					)
 
-						curr_response_reframing = openai.ChatCompletion.create(
-							deployment_id=deployment,
-							model='gpt-4',
-							messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
-							max_tokens=128,
-							top_p=top_p,
-							stop=['\n'],
-							request_timeout=30.0,
-						)
-
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "gpt-4"
-						gpt3_model = deployment
-
-						curr_response_reframing = openai.ChatCompletion.create(
-							model=gpt3_model,
-							messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
-							max_tokens=128,
-							top_p=top_p,
-							stop=['\n'],
-							request_timeout=30.0,
-						)
 					
 					
 					current_tries += 1
@@ -4716,40 +4640,23 @@ def rational_response_request_theme_gpt4_3(request):
 
 			while current_tries <= MAX_RETRIES:
 				try:
-					if current_tries <= 1:
-						openai.api_base = "https://reframing20k2.openai.azure.com"
-						openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-						openai.api_version = "2024-02-15-preview"
-						openai.api_type = "azure"
-						deployment = "gpt-4"
-						gpt3_model = deployment
+					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+					openai.api_version = "2024-02-15-preview"
+					openai.api_type = "azure"
+					deployment = "gpt-4"
+					gpt3_model = deployment
 
-						curr_response_reframing = openai.ChatCompletion.create(
-							deployment_id=deployment,
-							model='gpt-4',
-							messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
-							max_tokens=128,
-							top_p=top_p,
-							stop=['\n'],
-							request_timeout=30.0,
-						)
+					curr_response_reframing = openai.ChatCompletion.create(
+						deployment_id=deployment,
+						model='gpt-4',
+						messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
+						max_tokens=128,
+						top_p=top_p,
+						stop=['\n'],
+						request_timeout=30.0,
+					)
 
-					else:
-						openai.api_base = "https://api.openai.com/v1"
-						openai.api_key = os.getenv("OPENAI_API_KEY")
-						openai.api_version = ""
-						openai.api_type = "open_ai"
-						deployment = "gpt-4"
-						gpt3_model = deployment
-
-						curr_response_reframing = openai.ChatCompletion.create(
-							model=gpt3_model,
-							messages = curr_reframing_prompt + [{'role': 'user', 'content': prompt_input + '\nRational Response:'},],
-							max_tokens=128,
-							top_p=top_p,
-							stop=['\n'],
-							request_timeout=30.0,
-						)
 					
 					
 					current_tries += 1
@@ -4874,21 +4781,13 @@ def get_more_help_1(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				if current_tries <= 1:
-					openai.api_base = "https://reframing20k2.openai.azure.com"
-					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
-					openai.api_type = "azure"
-					deployment = "davinci-002"
-					gpt3_model = deployment
-				else:
-					openai.api_base = "https://api.openai.com/v1"
-					openai.api_key = os.getenv("OPENAI_API_KEY")
-					openai.api_version = ""
-					openai.api_type = "open_ai"
-					deployment = "text-davinci-003"
-					gpt3_model = deployment
-
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+				openai.api_version = "2024-02-15-preview"
+				openai.api_type = "azure"
+				deployment = "davinci-002"
+				gpt3_model = deployment
+				
 				curr_response_reframing = openai.Completion.create(
 					engine=gpt3_model,
 					prompt=prompt_input,
@@ -4975,20 +4874,12 @@ def get_more_help_2(request):
 
 		while current_tries <= MAX_RETRIES:
 			try:
-				if current_tries <= 1:
-					openai.api_base = "https://reframing20k2.openai.azure.com"
-					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
-					openai.api_type = "azure"
-					deployment = "davinci-002"
-					gpt3_model = deployment
-				else:
-					openai.api_base = "https://api.openai.com/v1"
-					openai.api_key = os.getenv("OPENAI_API_KEY")
-					openai.api_version = ""
-					openai.api_type = "open_ai"
-					deployment = "text-davinci-003"
-					gpt3_model = deployment
+				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
+				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
+				openai.api_version = "2024-02-15-preview"
+				openai.api_type = "azure"
+				deployment = "davinci-002"
+				gpt3_model = deployment
 
 				curr_response_reframing = openai.Completion.create(
 					engine=gpt3_model,

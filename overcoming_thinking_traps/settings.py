@@ -57,12 +57,11 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'diy_tool.apps.DiyToolConfig',
 	'study.apps.StudyConfig',
-	'users',
 ]
 
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['http://megavolt.cs.washington.edu:15000', 'https://mhanationalstg.wpengine.com', 'https://screening.mhanational.org', 'https://mhanational.org']
+CSRF_TRUSTED_ORIGINS = ['https://mhanationalstg.wpengine.com', 'https://screening.mhanational.org', 'https://mhanational.org']
 
 SESSION_COOKIE_SAMESITE = 'None'  # As a string
 SESSION_COOKIE_SECURE = True
@@ -91,7 +90,7 @@ ROOT_URLCONF = 'overcoming_thinking_traps.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [os.path.join(SETTINGS_PATH, 'diy_tool', 'templates'), os.path.join(SETTINGS_PATH, 'study', 'templates'), os.path.join(SETTINGS_PATH, 'users', 'templates'), os.path.join(SETTINGS_PATH, 'templates'),],
+		'DIRS': [os.path.join(SETTINGS_PATH, 'diy_tool', 'templates'), os.path.join(SETTINGS_PATH, 'templates'),],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -165,9 +164,9 @@ USE_TZ = True
 # STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 # STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = "users.CustomUser"
+# AUTH_USER_MODEL = "users.CustomUser"
 
-AUTHENTICATION_BACKENDS = ['users.auth_backend.PasswordlessAuthBackend',]
+# AUTHENTICATION_BACKENDS = ['users.auth_backend.PasswordlessAuthBackend',]
 
 DEFAULT_AUTO_FIELD ='django.db.models.AutoField' 
 
@@ -175,5 +174,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-LOGIN_REDIRECT_URL = '/study/home'
-LOGIN_URL = '/users/login'
+# LOGIN_REDIRECT_URL = '/study/home'
+# LOGIN_URL = '/users/login'
