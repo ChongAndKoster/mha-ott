@@ -777,7 +777,7 @@ def index(request):
 	remove_negative_feeling = 0 # np.random.choice([0, 1], p=[0.5, 0.5])
 
 	if prompt_to_use == None:
-		prompt_to_use = np.random.choice(['expert_v3_gpt3', 'expert_v3_gpt4'], p=[0.5, 0.5])
+		prompt_to_use = 'expert_v3_gpt4' # np.random.choice(['expert_v3_gpt3', 'expert_v3_gpt4'], p=[0.5, 0.5])
 	
 	if more_suggestions_btn == None:
 		more_suggestions_btn = 1 #np.random.choice([0, 1], p=[0.5, 0.5])
@@ -2039,7 +2039,7 @@ def cognitive_distortion_request(request):
 				openai.api_type = "azure"
 
 				curr_response_cd = openai.ChatCompletion.create(
-									deployment_id='gpt-35-turbo-16k',
+									deployment_id='gpt-35-turbo',
 									messages=curr_prompt,
 									temperature=0,
 									max_tokens=64,
