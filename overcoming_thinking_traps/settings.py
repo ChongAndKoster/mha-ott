@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'diy_tool.apps.DiyToolConfig',
-	'study.apps.StudyConfig',
+	# 'study.apps.StudyConfig',
 ]
 
 CSRF_COOKIE_SAMESITE = 'None'
