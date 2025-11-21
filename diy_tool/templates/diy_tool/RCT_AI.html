@@ -2557,6 +2557,15 @@
                         $("#cognitive_distortions").html('');
 						$("#cognitive_distortions_results").html('');
 
+                        // Reset cognitive distortion radio buttons/checkboxes
+						$("input[name='cognitive_distortion_category']").prop('checked', false);
+						$("input[name='cognitive_distortion_category']").prop('disabled', false);
+						
+						// Reset cognitive distortion variables
+						cognitive_distortion_category = 'None of These Thinking Traps Seem Right to Me';
+						cognitive_distortion_category_li = [];
+						distortion_definition_li = [];
+
                         $("#rational_response").html('');
 						$("#rational_response_results").html('');
 
@@ -2798,148 +2807,39 @@
 
                     try_again_working = true;
 
-                    previous_step = current_step;
-                    current_step = 0;
-
-                    $("#qbox-container-inner").fadeOut(300, function(){
-
-						$.ajax({
-							url: "{% url 'diy_tool:save_start_over' %}",
-							type: "GET",
-							dataType: "json",
-							data: {
-								thought_record_id: thought_record_id, 
-								step_number_from: previous_step,
-								skip_step: skip_step,
-								remove_negative_feeling: remove_negative_feeling,
-								prompt_to_use: prompt_to_use,
-								refresh_btn: refresh_btn,
-								more_suggestions_btn: more_suggestions_btn,
-								descriptive_thought_Q: descriptive_thought_Q,
-								A_A: A_A,
-								multiple_cognitive_distortions: multiple_cognitive_distortions,
-								emotion_questions: emotion_questions,
-								personalize: personalize,
-								readable: readable,
-								psychoeducation: psychoeducation,
-								ai: ai,
-								include_emotions: include_emotions,
-								},
-							success : function(data) {
-								if(debug) console.log('new thought id: ' + data['new_thought_record_id']);
-								thought_record_id = data['new_thought_record_id'];
-							},
-							error : function(xhr, errmsg, err) {
-								if(debug) console.log('not try again');
-							}
-						});
-
-						if(debug) console.log('new thought id set: ' + thought_record_id);
-
-                        // $("#start_over_div").hide();
-
-                        $('#qbox-container').css('min-height', '420px');
-
-                        prevBtn.classList.remove('d-inline-block');
-                        prevBtn.classList.add('d-none');
-
-                        submitBtn.classList.remove('d-inline-block');
-                        submitBtn.classList.add('d-none');
-
-                        nextBtn.classList.remove('d-none');
-                        nextBtn.classList.add('d-inline-block');
-
-                        $(nextBtn).html('Start');
-
-						if(win.width() <= mobile_width){
-							$("#start_over_div_mobile").fadeOut(300);
-						}
-
-
-                        // $("#chatbot-container-div").animate({width:'toggle'},250);
-
-                        // $(".chatlist").find("li:not(:first-child)").remove();
-
-                        step[previous_step].classList.remove('d-block');
-                        step[previous_step].classList.add('d-none');
-                        
-                        step[current_step].classList.remove('d-none');
-                        step[current_step].classList.add('d-block');
-
-                        if(previous_step == 2){
-                            $("#other_thoughts").addClass('d-none');
-                            $("#other_thoughts").removeClass('d-block');
+                    // Save start over to create new thought_record_id, then refresh page
+                    $.ajax({
+                        url: "{% url 'diy_tool:save_start_over' %}",
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            thought_record_id: thought_record_id, 
+                            step_number_from: current_step,
+                            skip_step: skip_step,
+                            remove_negative_feeling: remove_negative_feeling,
+                            prompt_to_use: prompt_to_use,
+                            refresh_btn: refresh_btn,
+                            more_suggestions_btn: more_suggestions_btn,
+                            descriptive_thought_Q: descriptive_thought_Q,
+                            A_A: A_A,
+                            multiple_cognitive_distortions: multiple_cognitive_distortions,
+                            emotion_questions: emotion_questions,
+                            personalize: personalize,
+                            readable: readable,
+                            psychoeducation: psychoeducation,
+                            ai: ai,
+                            include_emotions: include_emotions,
+                        },
+                        success : function(data) {
+                            if(debug) console.log('new thought id: ' + data['new_thought_record_id']);
+                            // Refresh the page to reset all form state and JavaScript variables
+                            window.location.reload();
+                        },
+                        error : function(xhr, errmsg, err) {
+                            if(debug) console.log('error saving start over, refreshing anyway');
+                            // Refresh even if save fails to ensure clean state
+                            window.location.reload();
                         }
-                        
-                        $("#empty_consent").hide();
-                        // $('#consent').prop('checked', false);
-
-                        $("#empty_thought").hide();
-                        $("#thought").val('');
-                        $("#empty_situation").hide();
-                        $("#situation").val('');
-                        $("#empty_cognitive_distortion").hide();
-                        $("#empty_reframe").hide();
-                        $("#empty_improved_reframe").hide();
-                        $("#empty_outcome").hide();
-                        $("#cognitive_distortions").html('');
-						$("#cognitive_distortions_results").html('');
-
-                        $("#rational_response").html('');
-						$("#rational_response_results").html('');
-
-						$("input[name='believable']").prop('checked', false);
-						$("input[name='stickiness']").prop('checked', false);
-						$("input[name='helpfulness']").prop('checked', false);
-						$("input[name='learnability']").prop('checked', false);
-
-						if(extra_q == 1){
-							$("input[name='recommendation']").prop('checked', false);
-						}
-
-						$(".side-step-active").removeClass('side-step-active');
-						$(".side-step-done").removeClass('side-step-done');
-
-						$("#thought-caption").text('');
-						$("#emotion-caption").text('');
-						$("#situation-caption").text('');
-						$("#thinking-trap-caption").text('');
-						$("#reframe-caption").text('');
-
-						$("#side-thought").addClass('side-step-active');
-
-						// $("#gender").val('default');
-						// $("#race").val('default');
-						// // $("#income").val('default');
-						// $("#education").val('default');
-						// $("#population").val('default');
-						// $("#problems").val('default');
-						// $("#treatment").val('default');
-						// $("#prior_experience").val('default');
-
-						// $("#age_range").selectpicker("refresh");
-						// $("#gender").selectpicker("refresh");
-						// $("#race").selectpicker("refresh");
-						// // $("#income").selectpicker("refresh");
-						// $("#education").selectpicker("refresh");
-						// $("#population").selectpicker("refresh");
-						// $("#problems").selectpicker("refresh");
-						// $("#treatment").selectpicker("refresh");
-						// $("#prior_experience").selectpicker("refresh");
-
-                        if(win.width() >= mobile_width){
-                            $('#full-page-container')[0].scrollIntoView({behavior: "auto",});
-                        }
-
-                        else{
-                            $('#full-page-container')[0].scrollIntoView({behavior: "auto",});
-                        }
-
-                        $("#qbox-container-inner").fadeIn(300, function(){
-
-							try_again_working = false;
-                        });
-
                     });
 
                 });
@@ -4881,7 +4781,7 @@
 																				'<div class="feedback_radio_group feedback_radio_flag form-check form-check-inline mx-0">' +
 																				'<input class="form-check-input feedback_radio_flag_input" type="radio" name="like_' + i +  '" id="flag_' + i + '" value="' + out[i].replace(/\"/g, '&quot;') + '">' +
 																				'<label class="form-check-label" for="flag_' + i + '">' +
-																				'<i class="fas fa-flag"></i> Flag inappropriate' +
+																				'<i class="fas fa-flag"></i> Flag as inappropriate' +
 																				'</label>' +
 																				'</div>' +
 																				'</div>' +
@@ -5040,7 +4940,7 @@
 																				'<div class="feedback_radio_group feedback_radio_flag form-check form-check-inline mx-0">' +
 																				'<input class="form-check-input feedback_radio_flag_input" type="radio" name="like_' + i +  '" id="flag_' + i + '" value="' + out[i-3].replace(/\"/g, '&quot;') + '">' +
 																				'<label class="form-check-label" for="flag_' + i + '">' +
-																				'<i class="fas fa-flag"></i> Flag inappropriate' +
+																				'<i class="fas fa-flag"></i> Flag as inappropriate' +
 																				'</label>' +
 																				'</div>' +
 																				'</div>' +
@@ -5278,7 +5178,7 @@
 											//                                     '<div class="feedback_radio_group feedback_radio_flag form-check form-check-inline mx-0">' +
 											//                                     '<input class="form-check-input" type="radio" name="like" id="flag">' +
 											//                                     '<label class="form-check-label" for="flag">' +
-											//                                     '<i class="fas fa-flag"></i> flag inappropriate' +
+											//                                     '<i class="fas fa-flag"></i> Flag as inappropriate' +
 											//                                     '</label>' +
 											//                                     '</div>' +
 											//                                     '</div>' +
@@ -5308,7 +5208,7 @@
 																				'<div class="feedback_radio_group feedback_radio_flag form-check form-check-inline mx-0">' +
 																				'<input class="form-check-input feedback_radio_flag_input" type="radio" name="like_' + i +  '" id="flag_' + i + '" value="' + out[i].replace(/\"/g, '&quot;') + '">' +
 																				'<label class="form-check-label" for="flag_' + i + '">' +
-																				'<i class="fas fa-flag"></i> Flag inappropriate' +
+																				'<i class="fas fa-flag"></i> Flag as inappropriate' +
 																				'</label>' +
 																				'</div>' +
 																				'</div>' +
@@ -6735,7 +6635,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		  <div class="modal-content">
 			<div class="modal-header">
-			  <h5 class="modal-title"><i class="fa fa-flag" aria-hidden="true"></i>&nbsp; Flag Inappropriate</h5>
+			  <h5 class="modal-title"><i class="fa fa-flag" aria-hidden="true"></i>&nbsp; Flag as inappropriate</h5>
 			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true" class="fs-5-5" id="modal_close_cross">&times;</span>
 			  </button>
