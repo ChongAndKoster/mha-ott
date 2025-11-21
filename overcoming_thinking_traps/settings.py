@@ -114,7 +114,7 @@ MIDDLEWARE = [
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	# XFrameOptionsMiddleware removed - using CSP_FRAME_ANCESTORS instead for better control
 ]
 
 # Security Settings
@@ -138,7 +138,9 @@ else:
 # Content Security (always enabled)
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME type sniffing
 SECURE_BROWSER_XSS_FILTER = True  # Enable browser XSS filter
-X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking (overrides CSP_FRAME_ANCESTORS in some browsers)
+# X_FRAME_OPTIONS disabled - using CSP_FRAME_ANCESTORS instead for cross-origin iframe embedding
+# CSP_FRAME_ANCESTORS allows embedding from screening.mhanational.org and other trusted domains
+X_FRAME_OPTIONS = None  # Disabled to allow CSP_FRAME_ANCESTORS to control iframe embedding
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'  # Control referrer information sent with requests
 
 # Only set proxy SSL header if running on Azure App Service
