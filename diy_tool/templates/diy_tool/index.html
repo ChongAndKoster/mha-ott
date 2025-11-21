@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--v11.19.24-->
+<!--v12.02.24-->
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-+H4iLjY3JsKiF2V6N366in5IQHj2uEsGV7Pp/GRcm0fn76aPAk5V8xB6n8fQhhSonTqTXs/klFz4D0GIn6Br9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
   
@@ -1251,7 +1251,7 @@
 
             $(document).ready(function(){
 
-                var debug = false;
+                var debug = true;
 				var win =$(window);
                 var mobile_width = 992;
 
@@ -1670,11 +1670,13 @@
 
 
 
+                {% if require_consent %}
                 $('div').on('change', '#consent', function () {
                     if($("#consent").is(':checked')){
                         $("#empty_consent").fadeOut(200);
                     }
                 });
+                {% endif %}
 
 
 				$('div').on('click', '#refresh_btn', function(event){
@@ -2328,6 +2330,7 @@
 							$("#qbox-container-inner").hide();
 
 							if(current_step == 0){
+								{% if require_consent %}
 								if($("#consent").is(':checked')){
 									current_step = 2;
 									previous_step = 0;
@@ -2336,6 +2339,11 @@
 									current_step = 1;
 									previous_step = 0;
 								}
+								{% else %}
+								// Consent disabled - skip directly to step 2
+								current_step = 2;
+								previous_step = 0;
+								{% endif %}
 							}
 
 							else{
@@ -2955,6 +2963,8 @@
 
                     if(current_step == 1)
                     {
+                        // Check consent only if require_consent is enabled
+                        {% if require_consent %}
                         if(!$("#consent").is(':checked')){
                             $("#empty_consent").fadeIn(200);
 							
@@ -2978,6 +2988,10 @@
                             nextWorking = false;
                             return;
                         }
+                        {% else %}
+                        // Consent form is disabled - skip validation
+                        if(debug) console.log('Consent form disabled - skipping validation');
+                        {% endif %}
                     }
 
                     else if(current_step == 2)
@@ -3288,6 +3302,7 @@
                         $("#qbox-container-inner").hide();
 
 						if(current_step == 0){
+							{% if require_consent %}
 							if($("#consent").is(':checked')){
 								current_step = 2;
 								previous_step = 0;
@@ -3296,6 +3311,11 @@
 								current_step = 1;
 								previous_step = 0;
 							}
+							{% else %}
+							// Consent disabled - skip directly to step 2
+							current_step = 2;
+							previous_step = 0;
+							{% endif %}
 						}
 
 						else{
@@ -3354,6 +3374,7 @@
                                 // $("#qbox-div").removeClass('col-lg-9');
                                 // $("#qbox-div").addClass('col-lg-7');
 
+								{% if require_consent %}
 								$.ajax({
                                     url: "{% url 'diy_tool:save_consent' %}",
                                     type: "GET",
@@ -3369,6 +3390,24 @@
                                         if(debug) console.log('consent not saved');
                                     }
                                 });
+								{% else %}
+								// Consent form disabled - auto-save consent as obtained
+								$.ajax({
+                                    url: "{% url 'diy_tool:save_consent' %}",
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        thought_record_id: thought_record_id, 
+										user_id: '{{ user_id }}',
+                                        },
+                                    success : function(json) {
+                                        if(debug) console.log('consent auto-saved (disabled mode)');
+                                    },
+                                    error : function(xhr, errmsg, err) {
+                                        if(debug) console.log('consent auto-save failed');
+                                    }
+                                });
+								{% endif %}
 
 
 								$("#chatbot-container-div").animate({width:'toggle'},250); //show("slide", { direction: "right" }, 1000);
@@ -5641,11 +5680,16 @@
 
 
 
+                            {% if require_consent %}
                             <div class="checkbox form-check fs-5-5 mt-3 mb-4 ms-3 me-4">
                                 <input type="checkbox" class="form-check-input" name="consent" id="consent" value="consent" required><label class="form-check-label" for="consent">By ticking this box, you are agreeing to use this tool. You are also confirming that you are at least 13 years old. Be sure that questions about the tool have been answered and that you understand what you are being asked to do. You may contact us if you think of a question later. You are free to stop using the tool at any time. To save a copy of this consent form, you can use <a href="https://docs.google.com/document/d/e/2PACX-1vSx1CzdfNJWap3I4rUjEDMgiHGGteQ-cJ7Fz7n_RiKTbs7KojzWJ-w642OEVGLA2ZcZ24O6x8dZL6us/pub" class="ext_url" target="_blank">this link</a>.</label>
                             </div> 
 
                             <p class="mb-2" id="empty_consent" style="display: none; font-size: 1.6em;"><mark style="background-color:#fff3e0;">You must select the checkbox to continue.</mark></p>
+                            {% else %}
+                            <!-- Consent form is disabled (REQUIRE_CONSENT=False) -->
+                            <input type="hidden" id="consent" checked>
+                            {% endif %}
 
                     </div>
                     </div>

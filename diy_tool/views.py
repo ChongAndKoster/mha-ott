@@ -885,7 +885,11 @@ def index(request):
 
 	thought_record_id = curr_thought_record.thought_record_id
 
-	return render(request, "diy_tool/index.html", {'user_id': user_id, 'condition': condition, 'thought_record_id': thought_record_id, 'skip_step': skip_step, 'skip_step_li': skip_step_li, 'remove_negative_feeling': remove_negative_feeling, 'prompt_to_use': prompt_to_use, 'refresh_btn': refresh_btn, 'more_suggestions_btn': more_suggestions_btn, 'descriptive_thought_Q': descriptive_thought_Q, 'emotion_step_no': emotion_step_no, 'situation_step_no': situation_step_no, 'thinking_trap_step_no': thinking_trap_step_no, 'reframe_step_no': reframe_step_no, 'evaluate_step_no': evaluate_step_no, 'total_steps': total_steps, 'A_A': A_A, 'multiple_cognitive_distortions': multiple_cognitive_distortions, 'extra_q': extra_q, 'emotion_questions': emotion_questions, 'personalize': personalize, 'readable': readable, 'psychoeducation': psychoeducation, 'ai': ai, 'include_emotions': include_emotions})
+	# Import settings to check REQUIRE_CONSENT
+	from django.conf import settings
+	require_consent = getattr(settings, 'REQUIRE_CONSENT', True)
+
+	return render(request, "diy_tool/index.html", {'user_id': user_id, 'condition': condition, 'thought_record_id': thought_record_id, 'skip_step': skip_step, 'skip_step_li': skip_step_li, 'remove_negative_feeling': remove_negative_feeling, 'prompt_to_use': prompt_to_use, 'refresh_btn': refresh_btn, 'more_suggestions_btn': more_suggestions_btn, 'descriptive_thought_Q': descriptive_thought_Q, 'emotion_step_no': emotion_step_no, 'situation_step_no': situation_step_no, 'thinking_trap_step_no': thinking_trap_step_no, 'reframe_step_no': reframe_step_no, 'evaluate_step_no': evaluate_step_no, 'total_steps': total_steps, 'A_A': A_A, 'multiple_cognitive_distortions': multiple_cognitive_distortions, 'extra_q': extra_q, 'emotion_questions': emotion_questions, 'personalize': personalize, 'readable': readable, 'psychoeducation': psychoeducation, 'ai': ai, 'include_emotions': include_emotions, 'require_consent': require_consent})
 
 
 
@@ -2035,11 +2039,11 @@ def cognitive_distortion_request(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 
 				curr_response_cd = openai.ChatCompletion.create(
-									deployment_id='gpt-35-turbo',
+									deployment_id='gpt-4o-mini',
 									messages=curr_prompt,
 									temperature=0,
 									max_tokens=64,
@@ -2099,12 +2103,13 @@ def cognitive_distortion_request(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 
-				curr_response_cd = openai.Completion.create(
-									deployment_id='gpt-35-turbo-instruct',
-									prompt = COGNITIVE_DISTORTION_PROBABILITIES + '\n\n' + 'Thought: ' + curr_original_thought + '\nCognitive Distortions: ' + curr_cd + '\nProbabilities:',
+				curr_response_cd = openai.ChatCompletion.create(
+									deployment_id='gpt-4o-mini',
+									model='gpt-4o-mini',
+									messages=[{"role": "user", "content": COGNITIVE_DISTORTION_PROBABILITIES + '\n\n' + 'Thought: ' + curr_original_thought + '\nCognitive Distortions: ' + curr_cd + '\nProbabilities:'}],
 									temperature=0,
 									max_tokens=64,
 									top_p=1,
@@ -2120,7 +2125,7 @@ def cognitive_distortion_request(request):
 
 		
 		try:
-			curr_cd = curr_response_cd['choices'][0]['text'].strip()
+			curr_cd = curr_response_cd['choices'][0]['message']['content'].strip()
 			curr_distr = eval(curr_cd)
 		except:
 			print('curr_cd:', curr_cd)
@@ -2263,7 +2268,7 @@ def cognitive_distortion_request_finetuned(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 
 				curr_response_cd = openai.Completion.create(
@@ -2427,14 +2432,14 @@ def make_more_readable(input_text):
 		try:
 			openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 			openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-			openai.api_version = "2024-02-15-preview"
+			openai.api_version = "2024-12-01-preview"
 			openai.api_type = "azure"
-			deployment = "gpt-35-turbo"
+			deployment = "gpt-4o-mini"
 			gpt3_model = deployment
 
 			curr_response_reframing = openai.ChatCompletion.create(
 							deployment_id=deployment,
-							model="gpt-35-turbo",
+							model="gpt-4o-mini",
 							messages= [{"role": "user", "content": READABLE_PROMPT + input_text}],
 							max_tokens=128,
 							stop=['\n'],
@@ -2799,7 +2804,7 @@ def rational_response_request_single(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -2994,7 +2999,7 @@ def rational_response_request_1(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -3103,7 +3108,7 @@ def rational_response_request_2(request):
 
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -3209,7 +3214,7 @@ def rational_response_request_3(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -3291,7 +3296,7 @@ def rational_response_request_theme_1(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 
 				curr_response_theme = openai.Completion.create(
@@ -3406,7 +3411,7 @@ def rational_response_request_theme_1(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -3497,7 +3502,7 @@ def rational_response_request_theme_2(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 			
 				curr_response_theme = openai.Completion.create(
@@ -3621,7 +3626,7 @@ def rational_response_request_theme_2(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -3693,14 +3698,14 @@ def get_theme(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
-				deployment = "gpt-35-turbo"
+				deployment = "gpt-4o-mini"
 				gpt3_model = deployment
 
 				curr_response_reframing = openai.ChatCompletion.create(
 					deployment_id=deployment,
-					model='gpt-35-turbo',
+					model='gpt-4o-mini',
 					messages=curr_prompt,
 					max_tokens=32,
 					top_p=1,
@@ -3831,7 +3836,7 @@ def rational_response_request_theme_new_1(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -4006,7 +4011,7 @@ def rational_response_request_theme_new_2(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -4180,7 +4185,7 @@ def rational_response_request_theme_new_3(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "davinci-002"
 					gpt3_model = deployment
@@ -4344,7 +4349,7 @@ def rational_response_request_theme_gpt4_1(request):
 					# if current_tries <= 1:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "gpt-4"
 					gpt3_model = deployment
@@ -4490,7 +4495,7 @@ def rational_response_request_theme_gpt4_2(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "gpt-4"
 					gpt3_model = deployment
@@ -4642,7 +4647,7 @@ def rational_response_request_theme_gpt4_3(request):
 				try:
 					openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 					openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-					openai.api_version = "2024-02-15-preview"
+					openai.api_version = "2024-12-01-preview"
 					openai.api_type = "azure"
 					deployment = "gpt-4"
 					gpt3_model = deployment
@@ -4783,7 +4788,7 @@ def get_more_help_1(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 				deployment = "davinci-002"
 				gpt3_model = deployment
@@ -4876,7 +4881,7 @@ def get_more_help_2(request):
 			try:
 				openai.api_base = os.getenv("OPENAI_ENDPOINT_AZURE")
 				openai.api_key = os.getenv("OPENAI_API_KEY_AZURE")
-				openai.api_version = "2024-02-15-preview"
+				openai.api_version = "2024-12-01-preview"
 				openai.api_type = "azure"
 				deployment = "davinci-002"
 				gpt3_model = deployment
